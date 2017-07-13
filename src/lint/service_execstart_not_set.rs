@@ -6,16 +6,16 @@ pub fn lint(unit: &SystemdUnit) -> Result<(), LintResult> {
 
     if let Some(&DirectiveEntry::Solo(ref type_entry)) = unit.lookup_by_key("Type") {
 
-        println!("{:?}", type_entry.value());
+        // println!("{:?}", type_entry.value());
 
-        if type_entry.value() != Some("Simple") {
+        if type_entry.value() != Some("simple") {
             return Ok(());
         }
 
         if !unit.has_key("ExecStart") {
             return Err(LintResult {
                 severity: LintSeverity::Error,
-                message: "Service with Type==Simple MUST set ExecStart= field".into(),
+                message: "Service with Type==simple MUST set ExecStart= field".into(),
                 code: LintCode::ErrorServiceSimpleMustHaveExecstart,
             });
         }
@@ -32,7 +32,7 @@ fn success_case() {
     // arrange
     let input = "
         [Service]
-        Type=Simple
+        Type=simple
         ExecStart=/bin/true
     ";
     let unit = systemd_parser::parse_string(input).unwrap();
@@ -47,7 +47,7 @@ fn error_case() {
     // arrange
     let input = "
         [Service]
-        Type=Simple
+        Type=simple
     ";
     let unit = systemd_parser::parse_string(input).unwrap();
     // act

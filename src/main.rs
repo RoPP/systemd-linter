@@ -42,18 +42,19 @@ pub fn main() {
         .unwrap_or_else(|err| format_res_and_exit(err, "PARSE ERROR"));
 
 
-    let mut has_errors = false;
+    // let mut has_errors = false;
 
     for lint_f in lint::ALL_LINTS.iter() {
         let res = lint_f(&unit_file);
-        has_errors = has_errors || res.is_ok();
-
-        println!("** {:?}\n", res);
+        // has_errors = has_errors || res.is_ok();
+        if !res.is_ok() {
+            println!("** {:?}\n", res);
+        }
     }
 
-    if has_errors {
-        error_and_exit(String::from("Lint errors. Exiting"))
-    }
+    // if has_errors {
+    //     error_and_exit(String::from("Lint errors. Exiting"))
+    // }
 }
 
 fn format_res_and_exit<T, Err: std::error::Error>(err: Err, msg: &str) -> T {

@@ -24,10 +24,13 @@ pub enum LintCode {
     ErrorUnknownDirective                               = 40_001,
     ErrorUnknownCategory                                = 40_002,
     ErrorMissingBusNameDirectiveInDBusService           = 40_003,
+    ErrorUnknownServiceType = 40_004,
+    ErrorNoServiceTypeSet = 40_005,
 }
 
 mod lint_missing_description;
 mod service_type_always_explicit;
+mod service_type_value;
 mod service_execstart_not_set;
 mod unknown_directive;
 mod unknown_category;
@@ -39,6 +42,7 @@ type LintFunction = fn(&SystemdUnit) -> Result<(), LintResult>;
 
 pub const ALL_LINTS: &'static [LintFunction] = &[lint_missing_description::lint,
                                                  service_type_always_explicit::lint,
+                                                 service_type_value::lint,
                                                  service_execstart_not_set::lint,
                                                  dbus_missing_bus_name_directive::lint,
                                                  unknown_directive::lint,

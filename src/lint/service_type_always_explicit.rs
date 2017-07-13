@@ -29,7 +29,7 @@ fn success_case() {
     // arrange
     let input = "
         [Service]
-        Type=Simple
+        Type=simple
         ExecStart=/bin/true
     ";
     let unit = systemd_parser::parse_string(input).unwrap();
